@@ -1,0 +1,23 @@
+       
+        @if (products != null)
+    {
+        @foreach (var item in products)
+        {
+            <SuggestedProduct product=item></SuggestedProduct>
+        }
+    }
+        
+    
+@code {
+
+
+    [Parameter]
+    public string? contractURL { get; set; }
+    public IEnumerable<Products>? products { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await _productsServices.SugestedProductsByBusiness(contractURL);
+
+    }
+}
