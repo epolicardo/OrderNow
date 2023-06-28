@@ -1,0 +1,50 @@
+﻿@page "/"
+@using OrderNow.Blazor.Pages.Landing
+
+<PageTitle>OrderNow</PageTitle>
+@if (contractURL != null)
+{
+    FormSubmit();
+}
+<AuthorizeView>
+    <Authorized>
+        <OrderNow.Blazor.Pages.User.Menu.UserDashboard></OrderNow.Blazor.Pages.User.Menu.UserDashboard>
+
+    </Authorized>
+    <NotAuthorized>
+        <div class="landing-container">
+
+            @*<NavbarSection />*@
+            <HeaderSection />
+            <AboutSection />
+            <GallerySection />
+            @*<ReserveSection />*@
+            <BlogSection />
+            @*<ReviewSection />*@
+            <ContactSection />
+            <FooterSection />
+        </div>
+
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "contractURL")]
+    public string contractURL { get; set; }
+
+
+    public void FormSubmit()
+    {
+        try
+        {
+            string url = "/business/" + contractURL;
+            _navMan.NavigateTo(url);
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+}

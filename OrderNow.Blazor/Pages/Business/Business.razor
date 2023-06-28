@@ -1,0 +1,54 @@
+@page "/business/"
+@page "/business/{contractURL}"
+
+<PageTitle>@business?.Name - OrderNow</PageTitle>
+
+<div id="business-main-container" class="text-center">
+
+    <div class="row pt-4">
+        <p id="welcome-label">Bienvenido a</p>
+    </div>
+    <div class="row">
+        <h1 id="business-name">@business?.Name</h1>
+    </div>
+    <div id="business-info">
+        <h3>@business?.Address?.City</h3>
+    </div>
+    <div id="favorite-shape">
+        <img src="/assets/imgs/Shape.png" alt="">
+    </div>
+    <a id="personal-attention-request" href="">Solicitar atención</a>
+
+    <a id="access-button" href="/menu/@contractURL">Ingresar</a>
+
+</div>
+
+@code {
+
+    [Parameter]
+    public string? contractURL { get; set; }
+    public Businesses? business { get; set; }
+    public string? backgroundImageURL { get; set; }
+
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        business = await _businessesServices.GetBusinessIfActive(contractURL);
+
+
+    }
+
+
+
+
+
+
+
+    public void FormSubmit()
+    {
+        _navMan.NavigateTo("/business");
+    }
+}
