@@ -1,0 +1,43 @@
+
+@if (product != null)
+{
+    <div id="suggested-item">
+
+        <a href="/product/@product.Id">
+            <div id="suggested-item-title">
+                @product.Name
+            </div>
+            <div class="suggested-item-img">
+
+           
+            </div>
+         
+            <div id="suggested-item-price">             
+                    <a href="@SetAsFavorite" id="heart"></a>
+                <label id="suggested-item-label-price">
+                    $ @product.Price
+                </label>
+            </div>
+        </a>
+    </div>
+}
+
+@code {
+    [ParameterAttribute]
+    public Product? product { get; set; }
+
+    [Parameter]
+    public string? contractURL { get; set; }
+    public IEnumerable<Product>? products { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await _productsServices.SugestedProductsByBusiness(contractURL);
+
+    }
+
+    public void SetAsFavorite()
+    {
+        
+    }
+}

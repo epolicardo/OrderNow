@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<Users> SignInManager
-@inject UserManager<Users> UserManager
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 <AuthorizeView>
      
@@ -27,7 +27,7 @@
 @code {
 
     [Parameter]
-    public Users? user { get; set; }
+    public User? user { get; set; }
     [Parameter]
     public string? contractURL { get; set; }
 

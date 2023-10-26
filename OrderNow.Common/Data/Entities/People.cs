@@ -12,9 +12,8 @@
 
         [Display(Name = "Domicilio")]
         [MaxLength(150)]
-        public Addresses? Address { get; set; }
+        public Address? Address { get; set; }
 
-       
         [Display(Name = "Fecha Nacimiento")]
         public DateTime? BirthDate { get; set; }
     }

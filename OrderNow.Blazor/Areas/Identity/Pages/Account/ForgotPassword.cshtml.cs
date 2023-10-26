@@ -19,10 +19,10 @@ namespace OrderNow.Blazor.Areas.Identity.Pages.Account
 {
     public class ForgotPasswordModel : PageModel
     {
-        private readonly UserManager<Users> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IEmailSender _emailSender;
 
-        public ForgotPasswordModel(UserManager<Users> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<User> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;

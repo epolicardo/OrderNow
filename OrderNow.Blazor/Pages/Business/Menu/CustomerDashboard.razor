@@ -1,5 +1,5 @@
 @page "/business/customers"
-@inject SignInManager<Users> SignInManager
+@inject SignInManager<User> SignInManager
 @using Microsoft.AspNetCore.Identity
 @layout BusinessLayout
 
@@ -17,10 +17,3 @@
   <option value="cash">Efectivo</option>
   <option value="voucher">Cupón</option>
 </select>
-
-
-
-@code{
-
-}
-

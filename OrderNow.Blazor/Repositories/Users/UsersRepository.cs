@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Repositories
 {
-    public class UsersRepository : GenericRepository<Users>, IUsersRepository
+    public class UsersRepository : GenericRepository<User>, IUsersRepository
     {
         private readonly DataContext _dataContext;
 
@@ -12,52 +12,52 @@ namespace Repositories
             _dataContext = dataContext;
         }
 
-        public Task<bool> CreateAsync(Users entity)
+        public Task<bool> CreateAsync(User entity)
         {
             return base.CreateAsync(entity);
         }
 
-        public Task<bool> EditAsync(Users entity)
+        public Task<bool> EditAsync(User entity)
         {
             return base.EditAsync(entity);
         }
 
-        public Task<Users> FindByConditionAsync(Expression<Func<Users, bool>> predicate)
+        public Task<User> FindByConditionAsync(Expression<Func<User, bool>> predicate)
         {
             return base.FindByConditionAsync(predicate);
         }
 
-        public Task<List<Users>> GetAll()
+        public Task<List<User>> GetAll()
         {
             return base.GetAll();
         }
 
-        public async Task<List<UsersBusinesses>> GetBusinessesByUser(Users users)
+        public async Task<List<UserBusiness>> GetBusinessesByUser(User users)
         {
-            return await _dataContext.UsersBusinesses.Where(x => x.Users.Email == users.Email).ToListAsync();
+            return await _dataContext.UsersBusinesses.Where(x => x.User.Email == users.Email).ToListAsync();
         }
 
-        public Task<Users> GetByIdAsync(Guid Id)
+        public Task<User> GetByIdAsync(Guid Id)
         {
             return base.GetByIdAsync(Id);
         }
 
-        public async Task<List<UsersBusinesses>> GetFavoriteBusinessesByUserAsync(string email)
+        public async Task<List<UserBusiness>> GetFavoriteBusinessesByUserAsync(string email)
         {
-            return await _dataContext.UsersBusinesses.Where(x => x.Users.Email == email).Include(x => x.Business).Include(x => x.Users).Where(x => x.IsFavorite == true).ToListAsync();
+            return await _dataContext.UsersBusinesses.Where(x => x.User.Email == email).Include(x => x.Business).Include(x => x.User).Where(x => x.IsFavorite == true).ToListAsync();
         }
 
-        public async Task<List<UsersBusinesses>> GetLastVisitedBusinessesByUserAsync(string email)
+        public async Task<List<UserBusiness>> GetLastVisitedBusinessesByUserAsync(string email)
         {
-            return await _dataContext.UsersBusinesses.Where(x => x.Users.Email == email).Include(x => x.Business).Include(x => x.Users).Where(x => x.LastVisit < DateTime.Now.AddDays(15)).ToListAsync();
+            return await _dataContext.UsersBusinesses.Where(x => x.User.Email == email).Include(x => x.Business).Include(x => x.User).Where(x => x.LastVisit < DateTime.Now.AddDays(15)).ToListAsync();
         }
 
-        public async Task<Users> GetUserByEmailAsync(string email)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
             return await _dataContext.Users?.Include(p => p.Person).FirstOrDefaultAsync(x => x.Email == email);
         }
 
-        public async Task<Users> GetUserDataForLogin(string email)
+        public async Task<User> GetUserDataForLogin(string email)
         {
             return await _dataContext.Users.Include(x => x.AssosiatedBusiness).FirstOrDefaultAsync(x => x.Email == email);
         }
@@ -67,17 +67,17 @@ namespace Repositories
             await _dataContext.Users.Include(x => x.Person).Where(x => x.Email == email).AsNoTracking().ToListAsync();
         }
 
-        public Task<List<UsersBusinesses>> SetFavoriteBusinessesByUserAsync(UsersBusinesses relation)
+        public Task<List<UserBusiness>> SetFavoriteBusinessesByUserAsync(UserBusiness relation)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<UsersBusinesses>> UpdateDateOfVisitToBusinessesByUserAsync(string email)
+        public Task<List<UserBusiness>> UpdateDateOfVisitToBusinessesByUserAsync(string email)
         {
             throw new NotImplementedException();
         }
 
-        Task<bool> IUsersRepository.SetFavoriteBusinessesByUserAsync(UsersBusinesses relation)
+        Task<bool> IUsersRepository.SetFavoriteBusinessesByUserAsync(UserBusiness relation)
         {
             throw new NotImplementedException();
         }

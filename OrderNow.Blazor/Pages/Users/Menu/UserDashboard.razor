@@ -1,0 +1,71 @@
+﻿@inject SignInManager<User> SignInManager
+@using Microsoft.AspNetCore.Identity
+
+
+<div class="row pt-4">
+    <div class="col-md-4">
+
+        @if (lastVisited != null)
+        {
+            <OrderNow.Blazor.Pages.Users.Menu.Components.DashboardSectionCard Title="Ultimos Visitados" lastVisited=lastVisited></OrderNow.Blazor.Pages.Users.Menu.Components.DashboardSectionCard>
+
+        }
+    </div>
+    <div class="col-md-4">
+
+        @if (favoriteBusinesses != null)
+        {
+            <OrderNow.Blazor.Pages.Users.Menu.Components.DashboardSectionCard Title="Mis favoritos" lastVisited=favoriteBusinesses></OrderNow.Blazor.Pages.Users.Menu.Components.DashboardSectionCard>
+        }
+    </div>
+    <div class="col-md-4">
+
+        @if (suggestedBusinesses != null)
+        {
+            <OrderNow.Blazor.Pages.Users.Menu.Components.SuggestedCard Title="Recomendados" list=suggestedBusinesses></OrderNow.Blazor.Pages.Users.Menu.Components.SuggestedCard>
+        }
+    </div>
+</div>
+<div class="row pt-4">
+
+    <h1>Mis productos favoritos</h1>
+    @if (favoriteProducts != null)
+    {
+        @foreach (var item in favoriteProducts)
+        {
+
+
+            <div class="card" style="width: 10rem; margin:1rem">
+                <img src="@item.Product.URLImage" class="card-img-top" alt="@item.Product.Name">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Product.Name</h5>
+                    <p class="card-text">@item.Product.Business.Name</p>
+                </div>
+            </div>
+
+
+        }
+
+    }
+</div>
+@code {
+
+    [Parameter]
+
+    public List<UserBusiness>? favoriteBusinesses { get; set; }
+    public List<UserBusiness>? lastVisited { get; set; }
+    public List<Business>? suggestedBusinesses { get; set; }
+    public List<FavoriteProducts>? favoriteProducts { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        lastVisited = await _usersServices.GetLastVisitedBusinessesByUserAsync(SignInManager.Context.User.Identity.Name);
+        favoriteBusinesses = await _usersServices.GetFavoriteBusinessesByUserAsync(SignInManager.Context.User.Identity.Name);
+        suggestedBusinesses = await _businessesServices.GetSuggestedBusinessesAsync();
+        favoriteProducts = await _productsServices.GetFavoriteProductsByUserAsync(SignInManager.Context.User.Identity.Name);
+
+
+
+    }
+}

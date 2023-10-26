@@ -1,5 +1,5 @@
 @page "/business/settings"
-@inject SignInManager<Users> SignInManager
+@inject SignInManager<User> SignInManager
 @using Microsoft.AspNetCore.Identity
 
 
@@ -15,10 +15,4 @@
   <option value="debit-card">Tarjeta de débito</option>
   <option value="cash">Efectivo</option>
   <option value="voucher">Cupón</option>
-</select>
-
-
-
-@code{
-
-}
+</select> 

@@ -9,7 +9,7 @@
                 ServiceLifetime.Transient);
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-            builder.Services.AddDefaultIdentity<Users>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<DataContext>();
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
@@ -25,7 +25,7 @@
                 options.Cookie.HttpOnly = true;
             });
 
-            builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<Users>>();
+            builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<User>>();
             //Servicios
             builder.Services.AddScoped<IDemoService, DemoService>()
                             .AddScoped<IConfigurationHelper, ConfigurationHelper>()

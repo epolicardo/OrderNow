@@ -24,17 +24,17 @@ namespace OrderNow.Blazor.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<Users> _signInManager;
-        private readonly UserManager<Users> _userManager;
-        private readonly IUserStore<Users> _userStore;
-        private readonly IUserEmailStore<Users> _emailStore;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly IUserStore<User> _userStore;
+        private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<Users> userManager,
-            IUserStore<Users> userStore,
-            SignInManager<Users> signInManager,
+            UserManager<User> userManager,
+            IUserStore<User> userStore,
+            SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -100,7 +100,6 @@ namespace OrderNow.Blazor.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
@@ -121,7 +120,7 @@ namespace OrderNow.Blazor.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("Users created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -155,27 +154,27 @@ namespace OrderNow.Blazor.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Users CreateUser()
+        private User CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<Users>();
+                return Activator.CreateInstance<User>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(Users)}'. " +
-                    $"Ensure that '{nameof(Users)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(Common.Data.Entities.User)}'. " +
+                    $"Ensure that '{nameof(Common.Data.Entities.User)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
-        private IUserEmailStore<Users> GetEmailStore()
+        private IUserEmailStore<User> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<Users>)_userStore;
+            return (IUserEmailStore<User>)_userStore;
         }
     }
 }

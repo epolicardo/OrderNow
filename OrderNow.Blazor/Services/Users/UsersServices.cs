@@ -3,40 +3,35 @@ using System.Linq.Expressions;
 
 namespace Services
 {
-    public class UsersServices : GenericServices<Users>, IUsersServices
+    public class UsersServices : GenericServices<User>, IUsersServices
     {
         private readonly IUsersRepository _usersRepository;
 
-        public UsersServices(IUsersRepository usersRepository, UserManager<Users> userManager) : base(usersRepository)
+        public UsersServices(IUsersRepository usersRepository, UserManager<User> userManager) : base(usersRepository)
         {
             _usersRepository = usersRepository;
         }
 
-        public bool AddProductToOrder(Users user, Orders order, Products product)
+        public bool AddProductToOrder(User user, Order order, Product product)
         {
             throw new NotImplementedException();
         }
 
-        //public async Task GetUserProfileDataAsync(string email)
-        //{
-        //    await _usersRepository.GetUserProfileData(email);
-        //}
-
-        //public async Task AddRelationUserBusiness(Guid user, Guid business)
-        //{
-        //   await  _usersRepository.AddRelationUserBusiness(user, business);
-        //}
-
-        public async Task<bool> SetFavoriteBusinessesByUserAsync(UsersBusinesses relation)
+        public async Task<bool> SetFavoriteBusinessesByUserAsync(UserBusiness relation)
         {
-            if (relation.Users == null) { return false; }
+            if (relation.User == null) { return false; }
 
             if (relation.Business == null) { return false; }
 
             return await _usersRepository.SetFavoriteBusinessesByUserAsync(relation);
         }
 
-        public bool AssignFavoriteProductsToUsers(Users user, Products product)
+        public async Task<bool> RemoveFavoriteBusiness(string url, Guid userId)
+        {
+            return false;
+        }
+
+        public bool AssignFavoriteProductsToUsers(User user, Product product)
         {
             if (user == null) { return false; }
 
@@ -44,38 +39,38 @@ namespace Services
 
             if (user.FavoriteProducts == null)
             {
-                user.FavoriteProducts = new List<Products>();
+                user.FavoriteProducts = new List<Product>();
             }
             user.FavoriteProducts.Add(product);
             return true;
         }
 
-        public async Task<Users> GetUserDataForLogin(string email)
+        public async Task<User> GetUserDataForLogin(string email)
         {
             return await _usersRepository.GetUserDataForLogin(email);
         }
 
-        public Task<bool> EditAsync(Users entity)
+        public Task<bool> EditAsync(User entity)
         {
             return base.EditAsync(entity);
         }
 
-        public Task<Users> FindByConditionAsync(Expression<Func<Users, bool>> predicate)
+        public Task<User> FindByConditionAsync(Expression<Func<User, bool>> predicate)
         {
             return base.FindByConditionAsync(predicate);
         }
 
-        public Task<IEnumerable<Users>> GetAll()
+        public Task<IEnumerable<User>> GetAll()
         {
             return base.GetAll();
         }
 
-        public Task<Users> GetByIdAsync(Guid Id)
+        public Task<User> GetByIdAsync(Guid Id)
         {
             return base.GetByIdAsync(Id);
         }
 
-        public async Task<Users> GetByMailAsync(string email)
+        public async Task<User> GetByMailAsync(string email)
         {
             return await _usersRepository.GetUserByEmailAsync(email);
         }
@@ -85,27 +80,27 @@ namespace Services
             return base.SaveAsync();
         }
 
-        public async Task<List<UsersBusinesses>> GetLastVisitedBusinessesByUserAsync(string email)
+        public async Task<List<UserBusiness>> GetLastVisitedBusinessesByUserAsync(string email)
         {
             return await _usersRepository.GetLastVisitedBusinessesByUserAsync(email);
         }
 
-        public async Task<List<UsersBusinesses>> GetFavoriteBusinessesByUserAsync(string email)
+        public async Task<List<UserBusiness>> GetFavoriteBusinessesByUserAsync(string email)
         {
             return await _usersRepository.GetFavoriteBusinessesByUserAsync(email);
         }
 
-        public Task<bool> UpdateUser(Users user)
+        public Task<bool> UpdateUser(User user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteUser(Users user)
+        public Task<bool> DeleteUser(User user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<UsersBusinesses>> UpdateDateOfVisitToBusinessesByUserAsync(string email)
+        public Task<List<UserBusiness>> UpdateDateOfVisitToBusinessesByUserAsync(string email)
         {
             throw new NotImplementedException();
         }

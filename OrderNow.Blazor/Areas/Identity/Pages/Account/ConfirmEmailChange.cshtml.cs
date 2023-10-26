@@ -16,10 +16,10 @@ namespace OrderNow.Blazor.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailChangeModel : PageModel
     {
-        private readonly UserManager<Users> _userManager;
-        private readonly SignInManager<Users> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public ConfirmEmailChangeModel(UserManager<Users> userManager, SignInManager<Users> signInManager)
+        public ConfirmEmailChangeModel(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

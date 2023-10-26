@@ -1,26 +1,25 @@
 ﻿namespace Services
 {
-    public interface IUsersServices : IGenericServices<Users>
+    public interface IUsersServices : IGenericServices<User>
     {
-        Task<bool> UpdateUser(Users user);
+        Task<bool> UpdateUser(User user);
 
-        Task<bool> DeleteUser(Users user);
+        Task<bool> DeleteUser(User user);
 
-        Task<Users> GetByIdAsync(Guid Id);
+        Task<User> GetByIdAsync(Guid Id);
 
-        Task<IEnumerable<Users>> GetAll();
+        Task<IEnumerable<User>> GetAll();
 
-        Task<Users> GetByMailAsync(string email);
+        Task<User> GetByMailAsync(string email);
 
-        Task<bool> SetFavoriteBusinessesByUserAsync(UsersBusinesses business);
+        Task<bool> SetFavoriteBusinessesByUserAsync(UserBusiness business);
 
-        Task<List<UsersBusinesses>> GetFavoriteBusinessesByUserAsync(string email);
+        Task<List<UserBusiness>> GetFavoriteBusinessesByUserAsync(string email);
 
-        Task<List<UsersBusinesses>> UpdateDateOfVisitToBusinessesByUserAsync(string email);
+        Task<List<UserBusiness>> UpdateDateOfVisitToBusinessesByUserAsync(string email);
 
-        Task<List<UsersBusinesses>> GetLastVisitedBusinessesByUserAsync(string email);
+        Task<List<UserBusiness>> GetLastVisitedBusinessesByUserAsync(string email);
 
-        Task<Users> GetUserDataForLogin(string email);
+        Task<User> GetUserDataForLogin(string email);
     }
-
 }
