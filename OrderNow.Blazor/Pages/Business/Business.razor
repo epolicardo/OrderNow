@@ -17,7 +17,7 @@
     <div id="favorite-shape">
         <a @onclick="SetAsFavorite">
 
-        <i class="@favorite" style="font-size:4rem"></i>
+            <i class="bi bi-suit-heart-fill"></i>
         </a>
     </div>
     <a id="access-button" href="/menu/@contractURL">Ingresar</a>
@@ -39,16 +39,18 @@
     {
 
         business = await _businessesServices.GetBusinessIfActive(contractURL);
-               //TODO 
-               // Buscar el usuario y comercio, para permitir ver si es favorito.
-               // Buscar en el usuario si el comercio está marcado como favorito
+        //TODO 
+        // Buscar el usuario y comercio, para permitir ver si es favorito.
+        // Buscar en el usuario si el comercio está marcado como favorito
 
     }
 
 
     public async Task SetAsFavorite()
     {
-        if (favorite.Equals("bi bi-suit-heart-fill"))
+        var response = await _usersServices.SetFavoriteBusinessesByUserAsync(_signInManager.Context.User.Identity.Name, contractURL);
+        // if (favorite.Equals("bi bi-suit-heart-fill"))
+        if (response)
         {
             favorite = "bi bi-suit-heart";
         }
@@ -63,6 +65,7 @@
 
     public void FormSubmit()
     {
+        _usersServices.UpdateDateOfVisitToBusinessesByUserAsync(_signInManager.Context.User.Identity.Name, business?.Id ?? Guid.Empty);
         _navMan.NavigateTo("/business");
     }
 }

@@ -1,19 +1,48 @@
-@page "/business/customers"
-@inject SignInManager<User> SignInManager
-@using Microsoft.AspNetCore.Identity
+@page "/business/customers"  
 @layout BusinessLayout
-
 
 <h1>Customer Dashboard</h1>
 
-<input type="range" name="" id="payment_form">
+<table>
+    <thead>
+        <tr>
+            <th>Customer Name</th>
+            <th>Customer Email</th>
+            <th>Preferred Payment Method</th>
+            <th>Last Visit</th>
+            <th>Last Order</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Customers != null && Customers.Any())
+        {
+            
+        @foreach (var customer in Customers)
+        {
+            <tr>
+                <td>@customer.User.Person.FirstName</td>
+                <td>@customer.User.Email</td>
+                <td>@customer.User.Email</td>
+                <td>@customer.LastVisit</td>
+                <td>@customer.Business.ContractURL</td>
+            </tr>
+        }
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public string? contractURL { get; set; }
+    [Parameter] 
+    public IEnumerable<UserBusiness> Customers { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Customers = await _businessesServices.GetCustomersByBusiness(Guid.Parse("46c10122-c8fe-4f61-a48d-034e19771673"));
 
 
-<label for="cars">Choose a payment form:</label>
+    }
 
-<select name="payment_form" id="payment_form">
-  <option value="credit-card">Tarjeta de crédito</option>
-  <option value="debit-card">Tarjeta de débito</option>
-  <option value="cash">Efectivo</option>
-  <option value="voucher">Cupón</option>
-</select>
+
+}

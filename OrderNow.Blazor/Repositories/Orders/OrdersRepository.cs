@@ -28,7 +28,7 @@
 
         public async Task<Order> ChangeOrderStatusByIdAsync(Order order, OrderStatus orderStatus)
         {
-            var orderInDB = await _dataContext.Orders.FirstOrDefaultAsync(x => x.Id == order.Id);
+            var orderInDB = await _dataContext.Orders.Include(b => b.Business.ContractURL).FirstOrDefaultAsync(x => x.Id == order.Id);
 
             if (orderInDB != null)
             {

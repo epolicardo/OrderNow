@@ -2,24 +2,24 @@
 {
     public interface IUsersServices : IGenericServices<User>
     {
-        Task<bool> UpdateUser(User user);
-
         Task<bool> DeleteUser(User user);
-
-        Task<User> GetByIdAsync(Guid Id);
 
         Task<IEnumerable<User>> GetAll();
 
+        Task<User> GetByIdAsync(Guid Id);
+
         Task<User> GetByMailAsync(string email);
 
-        Task<bool> SetFavoriteBusinessesByUserAsync(UserBusiness business);
-
         Task<List<UserBusiness>> GetFavoriteBusinessesByUserAsync(string email);
-
-        Task<List<UserBusiness>> UpdateDateOfVisitToBusinessesByUserAsync(string email);
 
         Task<List<UserBusiness>> GetLastVisitedBusinessesByUserAsync(string email);
 
         Task<User> GetUserDataForLogin(string email);
+
+        Task<bool> SetFavoriteBusinessesByUserAsync(string email, string contractURL);
+
+        Task<List<UserBusiness>> UpdateDateOfVisitToBusinessesByUserAsync(string email, Guid businessId);
+
+        Task<bool> UpdateUser(User user);
     }
 }

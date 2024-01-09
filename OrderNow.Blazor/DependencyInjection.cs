@@ -42,7 +42,8 @@
                             .AddTransient<IOrdersRepository, OrdersRepository>()
                             .AddTransient<IProductsRepository, ProductsRepository>()
                             .AddTransient<IUsersRepository, UsersRepository>()
-                            .AddTransient<IAddressesRepository, AddressesRepository>();
+                            .AddTransient<IAddressesRepository, AddressesRepository>()
+                            .AddTransient<IDateTimeProvider, DateTimeProvider>();
 
             return services;
         }

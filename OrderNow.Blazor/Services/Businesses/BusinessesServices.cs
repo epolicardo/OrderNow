@@ -1,7 +1,4 @@
-﻿using OrderNow.Blazor.Data;
-using System.Security.Policy;
-
-namespace Services
+﻿namespace Services
 {
     public class BusinessesServices : GenericServices<Business>, IBusinessesServices
     {
@@ -14,13 +11,6 @@ namespace Services
             _usersRepository = usersRepository;
         }
 
-        public async Task<Business> GetBusinessIfActive(string url)
-        {
-            return await _businessesRepository.GetByURL(url);
-        }
-
-     
-
         /// <summary>
         /// Este metodo valida si un comercio existe.
         /// </summary>
@@ -30,6 +20,16 @@ namespace Services
         {
             var t = await _businessesRepository.ExistsAsync(url);
             return t;
+        }
+
+        public async Task<Business> GetBusinessIfActive(string url)
+        {
+            return await _businessesRepository.GetByURL(url);
+        }
+
+        public async Task<IEnumerable<UserBusiness>> GetCustomersByBusiness(Guid businessId)
+        {
+            return await _businessesRepository.GetCustomersByBusiness(businessId);
         }
 
         public async Task<List<Business>> GetSuggestedBusinessesAsync()

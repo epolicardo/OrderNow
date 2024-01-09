@@ -14,13 +14,13 @@
         <tr>
             <th>Producto</th>
             <th>Cantidad</th>
-
+            <th>Precio Unitario</th>
+            <th>Total</th>
         </tr>
     </thead>
     <tbody id="order-list-container">
         @if (order?.Items != null)
         {
-
             @foreach (OrderItem item in order?.Items)
             {
                 <tr>
@@ -30,13 +30,17 @@
                     <td>
                         <h3>@item.Quantity</h3>
                     </td>
+                    <td>
+                        <h3>@item.Product.Price</h3>
+                    </td>
+                    <td>
+                        <h3>@(Convert.ToDecimal(item.Quantity) * item.Product.Price)</h3>
+                    </td>
                 </tr>
-
             }
         }
     </tbody>
 </table>
-
 
 @code {
     [Parameter]

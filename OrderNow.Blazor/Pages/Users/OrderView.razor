@@ -67,6 +67,7 @@
         order = await GetActiveOrder();
         await hubConnection.StartAsync();
     }
+
     private async Task UpdateOrderStatus()
     {
         await _ordersServices.ChangeOrderStatusByIdAsync(order, order.OrderStatus);
@@ -74,7 +75,7 @@
         {
             await hubConnection.SendAsync("OrderPlaced", order);
         }
-        _navMan.NavigateTo($"/?contractUrl={@order.Business.ContractURL}");
+    _navMan.NavigateTo($"/?contractUrl={@order.Business.ContractURL}");
     }
 
 

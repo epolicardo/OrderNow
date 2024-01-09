@@ -1,5 +1,4 @@
-﻿using OrderNow.Blazor.Data;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Repositories
 {
@@ -10,11 +9,6 @@ namespace Repositories
         public BusinessesRepository(DataContext context) : base(context)
         {
             _context = context;
-        }
-
-        public async Task<List<Business>> GetSuggestedBusinessesAsync()
-        {
-            return await _context.Businesses.Where(x => x.IsPromoted == true && x.PromotionCredits > 0).ToListAsync();
         }
 
         public async Task<bool> CreateAsync(Business entity)
@@ -51,6 +45,16 @@ namespace Repositories
 
         {
             return _context.Businesses.Include(x => x.Address).FirstOrDefaultAsync(x => x.ContractURL == url).GetAwaiter().GetResult();
+        }
+
+        public async Task<IEnumerable<UserBusiness>> GetCustomersByBusiness(Guid businessId)
+        {
+            return await _context.UsersBusinesses.Where(x => x.Business.Id.Equals(businessId)).ToListAsync();
+        }
+
+        public async Task<List<Business>> GetSuggestedBusinessesAsync()
+        {
+            return await _context.Businesses.Where(x => x.IsPromoted == true && x.PromotionCredits > 0).ToListAsync();
         }
 
         public Task<int> SaveAsync()

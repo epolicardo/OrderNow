@@ -1,15 +1,16 @@
-﻿using OrderNow.Blazor.Data;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Repositories
 {
     public class UsersRepository : GenericRepository<User>, IUsersRepository
     {
         private readonly DataContext _dataContext;
+        private readonly IDateTimeProvider _timeProvider;
 
-        public UsersRepository(DataContext dataContext) : base(dataContext)
+        public UsersRepository(DataContext dataContext, IDateTimeProvider dateTimeProvider) : base(dataContext)
         {
             _dataContext = dataContext;
+            _timeProvider = dateTimeProvider;
         }
 
         public Task<bool> CreateAsync(User entity)
@@ -72,14 +73,60 @@ namespace Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<UserBusiness>> UpdateDateOfVisitToBusinessesByUserAsync(string email)
+        public async Task<bool> SetFavoriteBusinessesByUserAsync(string email, string contractURL)
         {
-            throw new NotImplementedException();
+            //given the two received parameters, set the business as favorite for the user, by creating a new relation if not exists in UsersBusinesses table
+
+            if (_dataContext.UsersBusinesses.Where(x => x.User.Email == email).Select(a => a.Business.ContractURL == contractURL).FirstOrDefault())
+            {
+                //I need to return the relation found on the database to action on that relation
+                var relation = await _dataContext.UsersBusinesses.Where(x => x.User.Email == email).Include(x => x.Business).Include(x => x.User).FirstOrDefaultAsync(x => x.Business.ContractURL == contractURL);
+            }
+            else
+            {
+                await _dataContext.UsersBusinesses.AddAsync(new UserBusiness
+                {
+                    Business = await _dataContext.Businesses.FirstOrDefaultAsync(x => x.ContractURL == contractURL),
+                    User = await _dataContext.Users.FirstOrDefaultAsync(x => x.Email == email),
+                    IsFavorite = true,
+                    LastVisit = _timeProvider.UtcNow
+                });
+                return true;
+            }
+            await _dataContext.SaveChangesAsync();
+            return false;
         }
 
-        Task<bool> IUsersRepository.SetFavoriteBusinessesByUserAsync(UserBusiness relation)
+        public async Task<List<UserBusiness>> UpdateDateOfVisitToBusinessesByUserAsync(string email, Guid businessId)
         {
-            throw new NotImplementedException();
+            //When an User visits a Business, this method is called to update the date of the visit.
+            //If the user never visited before this business, this should create a new relation between the user and the business.
+
+            //If the user already visited this business, this should update the date of the last visit.
+
+            var user = await _dataContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            var userBusiness = await _dataContext.UsersBusinesses.Where(x => x.User.Email == email).ToListAsync();
+
+            if (userBusiness.Count == 0)
+            {
+                var business = await _dataContext.Businesses.FirstOrDefaultAsync(x => x.Id == businessId);
+                var userBusinessRelation = new UserBusiness
+                {
+                    Business = business,
+                    User = user,
+                    IsFavorite = false,
+                    LastVisit = _timeProvider.UtcNow
+                };
+                await _dataContext.UsersBusinesses.AddAsync(userBusinessRelation);
+                await _dataContext.SaveChangesAsync();
+                return userBusiness;
+            }
+            foreach (var item in userBusiness)
+            {
+                item.LastVisit = DateTime.Now;
+            }
+            await _dataContext.SaveChangesAsync();
+            return userBusiness;
         }
     }
 }
