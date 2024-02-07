@@ -8,3 +8,6 @@ global using Services;
 global using System;
 global using System.Threading.Tasks;
 global using Xunit;
+global using Microsoft.EntityFrameworkCore;
+global using OrderNow.Blazor.Data;
+global using OrderNow.Common.Services;
