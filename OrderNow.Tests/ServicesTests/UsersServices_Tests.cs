@@ -33,7 +33,7 @@ namespace OrderNow.Tests.Services
         {
             var relation = new UserBusiness();
             //Act
-            var result = await _sut.SetFavoriteBusinessesByUserAsync("", "");
+            var result = await _sut.SetFavoriteBusinessesByUserAsync(It.IsAny<string>(), It.IsAny<string>());
 
             //Assert
             Assert.True(result);

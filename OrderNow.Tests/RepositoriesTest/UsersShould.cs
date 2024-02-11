@@ -1,9 +1,13 @@
-﻿namespace OrderNow.Tests.RepositoriesTest
+﻿using Microsoft.EntityFrameworkCore;
+using OrderNow.Blazor.Data;
+using OrderNow.Common.Services;
+
+namespace OrderNow.Tests.RepositoriesTest
 {
     public class UsersShould
     {
         private readonly DataContext _dataContext;
-        private readonly Mock<IDateTimeProvider> _dateTimeProvider;
+        private readonly Mock<DateTimeProvider> _mockDateATimeProvider;
         private readonly UsersRepository _sut;
         //[Fact]
         //public async Task AddRelationWithBusiness()
@@ -33,7 +37,7 @@
             dbContextMock.Setup(s => s.Set<User>()).Returns(dbSetMock.Object);
 
             //Execute method of SUT (ProductsRepository)
-            var usersRepository = new UsersRepository(dbContextMock.Object, _dateTimeProvider.Object);
+            var usersRepository = new UsersRepository(dbContextMock.Object, _mockDateATimeProvider.Object);
             var user = usersRepository.GetByIdAsync(Guid.NewGuid()).Result;
 
             //Assert
