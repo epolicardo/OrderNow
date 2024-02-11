@@ -7,8 +7,8 @@ namespace OrderNow.Tests.Services
     public class UsersServices_Tests
     {
         private readonly UsersServices _sut;
-        private readonly Mock<IUsersRepository> _userRepositoryMock = new Mock<IUsersRepository>();
         private readonly UserManager<User> _userManager;
+        private readonly Mock<IUsersRepository> _userRepositoryMock = new Mock<IUsersRepository>();
 
         public UsersServices_Tests()
         {
@@ -16,11 +16,26 @@ namespace OrderNow.Tests.Services
         }
 
         [Fact]
+        public void AddProductToOrder_ShouldAddAProductToAnOrder_WhenProductAndOrderExists()
+        {
+            //UsersServices _sut = new UsersServices();
+
+            var user = new User();
+            var product = new Product();
+            var order = new Order();
+            //Act
+            var result = _sut.AddProductToOrder(user, order, product);
+
+            //Assert
+            Assert.True(result);
+        }
+
+        [Fact]
         public async Task AssingAFavoriteBusinessToAUser()
         {
             var relation = new UserBusiness();
             //Act
-            var result = await _sut.SetFavoriteBusinessesByUserAsync(relation);
+            var result = await _sut.SetFavoriteBusinessesByUserAsync(It.IsAny<string>(), It.IsAny<string>());
 
             //Assert
             Assert.True(result);
@@ -73,21 +88,6 @@ namespace OrderNow.Tests.Services
 
             response.Should().NotBeNull();
             result.Should().Be(expected);
-        }
-
-        [Fact]
-        public void AddProductToOrder_ShouldAddAProductToAnOrder_WhenProductAndOrderExists()
-        {
-            //UsersServices _sut = new UsersServices();
-
-            var user = new User();
-            var product = new Product();
-            var order = new Order();
-            //Act
-            var result = _sut.AddProductToOrder(user, order, product);
-
-            //Assert
-            Assert.True(result);
         }
 
         //Editar producto en orden
