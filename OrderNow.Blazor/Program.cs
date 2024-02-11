@@ -40,7 +40,10 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
- 
+IConfiguration _ = new ConfigurationBuilder()
+        .AddUserSecrets("3EA9A8FC-B75D-4300-883A-2609D5362685") //Nombre de la carpeta que hemos creado
+            .Build();
+
 builder.Services.AddApplicationServices(builder);
 
 var app = builder.Build();
