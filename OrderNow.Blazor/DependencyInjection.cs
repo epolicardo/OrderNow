@@ -8,6 +8,8 @@
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ConexionLocal")),
                 ServiceLifetime.Transient);
 
+            builder.Services.AddLogging();
+
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<DataContext>();

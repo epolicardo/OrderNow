@@ -14,12 +14,15 @@ namespace Repositories
 
         Task<Product> GetByIdAsync(Guid Id);
 
+        Task<List<FavoriteProducts>> GetFavoriteProductsByUserAsync(string email);
+
+        Task<Product> GetFullProductById(Guid id);
+
         List<Product> ProductByName(string name);
 
         Task<IEnumerable<Product>> ProductsByBusiness(Guid businessId);
 
-        Task<List<FavoriteProducts>> GetFavoriteProductsByUserAsync(string email);
-        Task<Product> GetFullProductById(Guid id);
+        Task<IEnumerable<Product>> ProductsByContractURLAsync(string contractURL);
 
         Task<int> SaveAsync();
 

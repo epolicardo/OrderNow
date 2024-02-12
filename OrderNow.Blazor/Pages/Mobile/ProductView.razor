@@ -8,11 +8,11 @@
     <div id="action-bar">
 
         <a href="#" id="arrow-back">
-            A
+            Back
         </a>
-        <a href="#" id="set-favorite">H</a>
+        <a href="#" id="set-favorite">Heart</a>
         <a href="#" id="share-product">
-            B
+            Share
         </a>
     </div>
     <img src="@product.URLImage" alt="" id="product-image" />
@@ -108,7 +108,7 @@
             order = await _ordersServices.CreateOrderAsync(businessId, email);
             if (order.Items == null)
             {
-                order.Items = new List<OrderItem>();
+                order.Items = new List<Common.Data.Entities.OrderItem>();
             }
         }
         await _protectedSessionStore.SetAsync("orderSession", order);

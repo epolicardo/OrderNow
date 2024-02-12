@@ -28,6 +28,11 @@ namespace Repositories
             return base.FindByConditionAsync(predicate);
         }
 
+        public async Task<IEnumerable<User>> GetAciveUsersAsync()
+        {
+            return await _dataContext.Users.Where(x => x.Deleted == null).ToListAsync();
+        }
+
         public Task<List<User>> GetAll()
         {
             return base.GetAll();

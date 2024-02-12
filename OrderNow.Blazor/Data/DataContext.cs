@@ -26,7 +26,7 @@ namespace OrderNow.Blazor.Data
         public DbSet<AdvertisingContract> AdvertisingContracts { get; set; }
         public DbSet<OrderQueue> Queues { get; set; }
         public DbSet<Sale> Sales { get; set; }
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<UserOrder> UsersOrders { get; set; }
     }
 }

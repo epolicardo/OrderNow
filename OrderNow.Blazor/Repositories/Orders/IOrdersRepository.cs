@@ -1,4 +1,5 @@
-﻿namespace Repositories
+﻿
+namespace Repositories
 {
     public interface IOrdersRepository : IGenericRepository<Order>
     {
@@ -9,7 +10,7 @@
         Task<Order> CreateOrderAsync(string user, Guid business);
 
         Task<Order> GetFullOrderById(Guid id);
-
+        Task<IEnumerable<Order>> GetLastGeneratedOrdersAsync();
         Task<List<Order>> GetPendingOrdersByBusinessAsync(string businessId);
     }
 }

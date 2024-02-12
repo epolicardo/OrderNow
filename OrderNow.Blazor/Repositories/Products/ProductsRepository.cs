@@ -42,6 +42,11 @@ namespace Repositories
             return a;
         }
 
+        public async Task<List<FavoriteProducts>> GetFavoriteProductsByUserAsync(string email)
+        {
+            return await _context.FavoriteProductsByUser.Where(x => x.User.Email == email).Include(x => x.Product).ThenInclude(x => x.Business).ToListAsync();
+        }
+
         public async Task<Product> GetFullProductById(Guid id)
         {
             var product = await _context.Products.Include(x => x.Business).FirstOrDefaultAsync(x => x.Id == id);
@@ -75,6 +80,16 @@ namespace Repositories
             return await _context.Products.Where(x => x.Business.Id == businessId).ToListAsync();
         }
 
+        public List<Product> ProductsByBusinessByCategory(string URL, Category Category)
+        {
+            return _context.Products.Where(x => x.Business.ContractURL == URL).Where(p => p.Category.Name == Category.Name).ToList();
+        }
+
+        public async Task<IEnumerable<Product>> ProductsByContractURLAsync(string contractURL)
+        {
+            return await _context.Products.Where(x => x.Business.ContractURL == contractURL && x.Deleted == null).ToListAsync();
+        }
+
         public Task<int> SaveAsync()
         {
             throw new NotImplementedException();
@@ -84,16 +99,6 @@ namespace Repositories
         public async Task<IEnumerable<Product>> SugestedProductsByBusiness(string contractURL)
         {
             return await _context.Products.Include(x => x.Category).Where(x => x.Business.ContractURL == contractURL).Where(p => p.IsSuggested == true).ToListAsync();
-        }
-
-        public List<Product> ProductsByBusinessByCategory(string URL, Category Category)
-        {
-            return _context.Products.Where(x => x.Business.ContractURL == URL).Where(p => p.Category.Name == Category.Name).ToList();
-        }
-
-        public async Task<List<FavoriteProducts>> GetFavoriteProductsByUserAsync(string email)
-        {
-            return await _context.FavoriteProductsByUser.Where(x => x.User.Email == email).Include(x => x.Product).ThenInclude(x => x.Business).ToListAsync();
         }
     }
 }

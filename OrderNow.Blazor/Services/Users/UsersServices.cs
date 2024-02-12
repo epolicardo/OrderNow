@@ -45,6 +45,16 @@ namespace Services
             return base.FindByConditionAsync(predicate);
         }
 
+        public async Task<IEnumerable<User>> GetAciveUsersAsync()
+        {
+            return await _usersRepository.GetAciveUsersAsync();
+        }
+
+        public Task<IEnumerable<User>> GetActiveUsersAsync()
+        {
+            return _usersRepository.GetAciveUsersAsync();
+        }
+
         public Task<IEnumerable<User>> GetAll()
         {
             return base.GetAll();

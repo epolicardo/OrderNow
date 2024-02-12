@@ -9,35 +9,6 @@
             _productsRepository = productsRepository;
         }
 
-        public Task<bool> CreateAsync(Product entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> EditAsync(Product entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Product> FindByConditionAsync(System.Linq.Expressions.Expression<Func<Product, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Product>> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-        public async Task<Product> GetByIdAsync(Guid Id)
-        {
-            return await _productsRepository.GetByIdAsync(Id);
-        }
-
-        public async Task<Product> GetFullProductById(Guid id) =>await _productsRepository.GetFullProductById(id);
-
         public double CalculateDiscounts(double precio, int cantidad, int lleva, int paga)
         {
             if (cantidad == lleva)
@@ -59,19 +30,51 @@
             }
         }
 
-        public async Task<IEnumerable<Product>> SugestedProductsByBusiness(string contractURL)
+        public Task<bool> CreateAsync(Product entity)
         {
-            return await _productsRepository.SugestedProductsByBusiness(contractURL);
+            throw new NotImplementedException();
         }
+
+        public Task<bool> EditAsync(Product entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Product> FindByConditionAsync(System.Linq.Expressions.Expression<Func<Product, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Product>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Product> GetByIdAsync(Guid Id)
+        {
+            return await _productsRepository.GetByIdAsync(Id);
+        }
+
+        public Task<List<FavoriteProducts>> GetFavoriteProductsByUserAsync(string email)
+        {
+            return _productsRepository.GetFavoriteProductsByUserAsync(email);
+        }
+
+        public async Task<Product> GetFullProductById(Guid id) => await _productsRepository.GetFullProductById(id);
 
         public Task<IEnumerable<Product>> ProductsByBusiness(Guid businessId)
         {
             return _productsRepository.ProductsByBusiness(businessId);
         }
 
-        public Task<List<FavoriteProducts>> GetFavoriteProductsByUserAsync(string email)
+        public async Task<IEnumerable<Product>> ProductsByContractURLAsync(string contractURL)
         {
-            return _productsRepository.GetFavoriteProductsByUserAsync(email);
+            return await _productsRepository.ProductsByContractURLAsync(contractURL);
+        }
+
+        public async Task<IEnumerable<Product>> SugestedProductsByBusiness(string contractURL)
+        {
+            return await _productsRepository.SugestedProductsByBusiness(contractURL);
         }
     }
 }

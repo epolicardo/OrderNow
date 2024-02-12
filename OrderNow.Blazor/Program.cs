@@ -33,7 +33,6 @@ using Serilog;
 //app.UseAuthorization();
 //app.MapControllers();
 //app.MapBlazorHub();
-//app.MapHub<BusinessHub>("/businesshub");
 //app.MapFallbackToPage("/_Host");
 
 //app.Run();
@@ -64,6 +63,15 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapBlazorHub();
+app.MapHub<BusinessHub>("/businesshub");
 app.MapFallbackToPage("/_Host");
 
+Log.Logger = new LoggerConfiguration()
+          .WriteTo.Seq("http://localhost:5341")
+          .CreateLogger();
+
+Log.Information("OrderNow Started by user, {Name}!", Environment.UserName);
+
+// Important to call at exit so that batched events are flushed.
+Log.CloseAndFlush();
 app.Run();

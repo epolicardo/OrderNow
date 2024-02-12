@@ -75,7 +75,16 @@
         {
             InvokeAsync(StateHasChanged);
         });
+        try
+        {
         await hubConnection.StartAsync();
+
+        }
+        catch (Exception)
+        {
+            
+            throw;
+        }
 
     }
     public async Task<List<Order>> GetPendingOrders()

@@ -5,6 +5,7 @@
         Task<Order> GetByIdAsync(Guid id);
 
         Task<Order> GetFullOrderById(Guid id);
+        Task<IEnumerable<Order>> GetLastGeneratedOrdersAsync();
 
         Task<Order> CreateOrderAsync(Guid businessId, string email);
 

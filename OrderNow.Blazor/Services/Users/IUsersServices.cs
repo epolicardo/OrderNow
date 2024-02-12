@@ -4,6 +4,8 @@
     {
         Task<bool> DeleteUser(User user);
 
+        Task<IEnumerable<User>> GetActiveUsersAsync();
+
         Task<IEnumerable<User>> GetAll();
 
         Task<User> GetByIdAsync(Guid Id);

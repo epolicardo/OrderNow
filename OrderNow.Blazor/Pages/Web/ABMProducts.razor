@@ -1,0 +1,39 @@
+﻿@page "/business/products"
+@page "/business/{contractUrl}/products"
+@inject SignInManager<User> SignInManager
+@using Microsoft.AspNetCore.Identity
+@layout BusinessLayout
+
+<div class="container">
+    <div class="Filtro"></div>
+    <div class="ProductList">
+        @if (productList != null && productList.Any())
+        {
+
+            <ListadoProductos productListAttribute="@productList"></ListadoProductos>
+        }
+
+    </div>
+    <div class="ABM-Title"></div>
+    <div class="ABM-Form">
+        <ABMProductForm></ABMProductForm>
+    </div>
+    <div class="Pagination"></div>
+</div>
+@code {
+
+    [Parameter]
+    public string? contractURL { get; set; }
+
+    [Parameter]
+    public IEnumerable<Product>? productList { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        productList = await _productsServices.ProductsByContractURLAsync(contractURL);
+
+
+    }
+
+
+}

@@ -1,4 +1,4 @@
-
+@using OrderNow.Blazor.Helpers;
 <tr id="order-data">
     <td id="customer-name">
         <p>
@@ -28,16 +28,16 @@
 
         </p>
     </td>
-    <td id="order-date">
+    <td id="order-elapsed">
         <p>
-            123
+            @orderAttr.LastModified.ToLocalTime()
         </p>
     </td>
     <td id="payment-status">
         <p>
             @if (orderAttr.PaymentStatus == PaymentStatus.FullyPayed)
             {
-                @orderAttr.TotalAmount <i class="bi bi-check2-circle"></i>
+                <i class="bi bi-check2-circle"></i>
 
             }
             else

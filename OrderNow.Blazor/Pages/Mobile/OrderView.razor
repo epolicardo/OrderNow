@@ -2,6 +2,7 @@
 @page "/order/view/{orderId}"
 @using Microsoft.AspNetCore.Identity;
 
+
 @inject SignInManager<User> SignInManager
 
 @implements IAsyncDisposable
@@ -22,7 +23,12 @@
         <MessageBox></MessageBox>
     </div>
     <div id="order-amount-container">
-        <label id="label-total">Total $ 546.90</label>
+        @if (order?.Items != null)
+        {
+            
+        <label id="label-total">Total $ @order.TotalAmount</label>
+        }
+
         <button disabled="@(IsConnected==false)"
                 id="payment-button" class="btn btn-primary"
                 @onclick=GoBack>
@@ -75,7 +81,8 @@
         {
             await hubConnection.SendAsync("OrderPlaced", order);
         }
-    _navMan.NavigateTo($"/?contractUrl={@order.Business.ContractURL}");
+
+        // _navMan.NavigateTo("/",true);
     }
 
 

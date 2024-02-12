@@ -2,6 +2,8 @@
 {
     public interface IUsersRepository : IGenericRepository<User>
     {
+        Task<IEnumerable<User>> GetAciveUsersAsync();
+
         Task<List<UserBusiness>> GetFavoriteBusinessesByUserAsync(string email);
 
         Task<List<UserBusiness>> GetLastVisitedBusinessesByUserAsync(string email);

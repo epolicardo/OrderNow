@@ -1,4 +1,8 @@
-﻿namespace Services
+﻿using Microsoft.AspNetCore.Identity;
+using OrderNow.Common.Data.Entities;
+using Serilog;
+
+namespace Services
 {
     public class OrdersServices : GenericServices<Order>, IOrdersServices
     {
@@ -49,6 +53,7 @@
 
         public async Task<Order> ChangeOrderStatusByIdAsync(Order order, OrderStatus orderStatus)
         {
+            Log.Information("Order is being modified", order);
             return await _ordersRepository.ChangeOrderStatusByIdAsync(order, orderStatus);
         }
 
@@ -62,6 +67,11 @@
             return await _ordersRepository.GetFullOrderById(id);
         }
 
+        public async Task<IEnumerable<Order>> GetLastGeneratedOrdersAsync()
+        {
+            return await _ordersRepository.GetLastGeneratedOrdersAsync();
+        }
+
         public async Task<List<Order>> GetPendingOrdersByBusiness(string businessId)
         {
             return await _ordersRepository.GetPendingOrdersByBusinessAsync(businessId);
@@ -69,6 +79,7 @@
 
         public void ModifyProductInOrder(Order orders, Product product, float quantity)
         {
+            Log.Information("Hola");
         }
 
         public void RemoveProductFromOrder(Order orders, Product product, float quantity)

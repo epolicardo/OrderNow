@@ -6,7 +6,8 @@
     font-weight: bold;
     justify-content: center;
     text-align: center;
-    max-width: 16rem;
+    max-width: 50%;
+    max-height: 12rem;
     background-color: rgb(193, 194, 194, 0.2);
     border-radius: 1rem;
     /* gap: 1rem; */
@@ -15,51 +16,55 @@
 #suggested-item-img-box {
     display: grid;
     justify-items: center;
+    max-width: 10rem;
 }
 
 #suggested-item-price {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    font-size: 1.5 rem;
     /* justify-content: end;
     align-content: center; */
 }
 
 #suggested-item-img {
-
+    display: grid;
+    justify-items: center;
+    max-width: 100px;
 }
 
 #suggested-item-label-price {
     display: grid;
-    font-size: 2rem;
+    font-size: 1.3rem;
     grid-column: 2 / span 1;
     font-family: 'Raleway';
     margin-top: 1rem;
-    color:black;
+    color: black;
 }
 
 #favorite-button-shape {
-    max-width: 15rem;
-    max-height: 15rem;
+    max-width: 10rem;
+    max-height: 10rem;
     margin-top: 1rem;
     margin-left: 1rem;
     grid-column: 1 / span 1;
     max-width: 2rem;
-    background:red;
+    background: red;
     padding: 15px 40px;
-    color:#fff;
-
-}
-#favorite-button-shape :hover{
+    color: #fff;
 }
 
+    #favorite-button-shape :hover {
+        color: #fff;
+    }
 
-    #suggested-item-title{
-    color:black;
+#suggested-item-title {
+    color: black;
 }
 
 #heart {
     display: flex;
-    margin-top:30px;
+    margin-top: 30px;
     margin-left: 10px;
     width: 30px;
     aspect-ratio: 1;

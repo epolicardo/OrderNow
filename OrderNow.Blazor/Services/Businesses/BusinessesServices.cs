@@ -1,4 +1,6 @@
-﻿namespace Services
+﻿using Serilog;
+
+namespace Services
 {
     public class BusinessesServices : GenericServices<Business>, IBusinessesServices
     {
@@ -24,6 +26,7 @@
 
         public async Task<Business> GetBusinessIfActive(string url)
         {
+            Log.Debug("prueba");
             return await _businessesRepository.GetByURL(url);
         }
 

@@ -1,4 +1,5 @@
-﻿namespace Repositories
+﻿
+namespace Repositories
 {
     public class OrdersRepository : GenericRepository<Order>, IOrdersRepository
     {
@@ -28,7 +29,7 @@
 
         public async Task<Order> ChangeOrderStatusByIdAsync(Order order, OrderStatus orderStatus)
         {
-            var orderInDB = await _dataContext.Orders.Include(b => b.Business.ContractURL).FirstOrDefaultAsync(x => x.Id == order.Id);
+            var orderInDB = await _dataContext.Orders.FirstOrDefaultAsync(x => x.Id == order.Id);
 
             if (orderInDB != null)
             {
@@ -105,6 +106,14 @@
                 .Include(x => x.Items)
                 .ThenInclude(x => x.Product)
                 .SingleAsync(x => x.Id == id);
+        }
+
+        public async Task<IEnumerable<Order>> GetLastGeneratedOrdersAsync()
+        {
+            var orders = await _dataContext.Orders
+                .Where(o => o.Created >= _dateTimeProvider.UtcNow.AddHours(-24))
+                .ToListAsync();
+            return orders;
         }
 
         public async Task<List<Order>> GetPendingOrdersByBusinessAsync(string businessId)

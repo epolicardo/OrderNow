@@ -2,7 +2,7 @@
 @page "/business/dashboard/{contractURL}"
 @layout BusinessLayout
 
-@using OrderNow.Blazor.Pages.Business.Components
+@using OrderNow.Blazor.Pages.Web.Business.Components
 @using OrderNow.Common.Data.Entities
 @using OrderNow.Common.Services
 
@@ -22,18 +22,11 @@
     [Parameter]
     public Business? business { get; set; }
 
-
-    public string ElapsedTime(DateTime createdAt)
-    {
-        DateTime startTime = _dateTimeProvider.UtcNow;
-        var h = startTime.Subtract(createdAt).Hours.ToString("00");
-        var m = startTime.Subtract(createdAt).Minutes.ToString("00");
-        return $"{h}:{m}";
-    }
+ 
     protected override async Task OnInitializedAsync()
     {
         business = await _businessesServices.GetBusinessIfActive(contractURL);
-
+      
 
     }
 

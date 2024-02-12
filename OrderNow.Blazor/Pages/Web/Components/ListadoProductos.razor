@@ -1,7 +1,4 @@
-﻿@page "/manage-products"
-
-    
-<table class="table table-striped">
+﻿<table class="table table-striped">
     <thead>
         <tr>
             <th>Codigo</th>
@@ -14,18 +11,19 @@
         </tr>
     </thead>
     <tbody id="order-list-container">
-       @* @if (products != null)
+        @if (productList != null)
         {
 
-            @foreach (Products prod in products)
+            @foreach (Product prod in productList)
             {
-                <Item orderAttr=prod></Item>
+                <label>@prod.Name</label>
             }
-        }*@
+        }
     </tbody>
 </table>
-@code {
 
+@code{
 
-
+    [ParameterAttribute]
+    public IEnumerable<Product>? productList { get; set; }
 }
